@@ -11,7 +11,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 st.title('Analisis Penggunaan Sepeda Harian')
 
 # Membaca data (dari sumber yang sama seperti sebelumnya)
-df_day = pd.read_csv("https://github.com/nurrizkyarumjatmiko/proyek_analisis_data/blob/e43b3f9047ced4ab16d50ffce84901ab2621b802/dashboard/cleaned_dataset.csv")
+df_day = pd.read_csv("https://raw.githubusercontent.com/nurrizkyarumjatmiko/proyek_analisis_data/blob/main/dashboard/cleaned_dataset.csv")
 
 # Menambahkan kolom untuk memisahkan hari kerja dan hari libur
 df_day['Hari'] = df_day['workingday'].apply(lambda x: 'Hari Kerja' if x == 1 else 'Hari Libur')
