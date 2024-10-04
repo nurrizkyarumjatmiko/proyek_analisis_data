@@ -101,3 +101,61 @@ ax6.set_xlabel('Tanggal')
 plt.xticks(rotation=45)
 ax6.legend()
 st.pyplot(fig6)
+
+# Menambahkan bagian untuk analisis clustering penggunaan sepeda berdasarkan musim dan hari kerja
+st.subheader('Clustering Penggunaan Sepeda Berdasarkan Musim dan Hari Kerja')
+
+# DataFrame `usage_summary` (Pastikan Anda sudah memiliki data ini, misalnya dari analisis clustering sebelumnya)
+# Berikut adalah contoh bagaimana data tersebut bisa dibuat
+# usage_summary = df.groupby(['season', 'Cluster']).agg({'cnt': 'mean'}).reset_index()
+
+# Untuk contoh ini, kita akan menggunakan data buatan
+# Anda bisa mengganti bagian ini dengan data yang sudah ada
+season_order = ['Winter', 'Spring', 'Summer', 'Fall']
+clusters = ['Cluster 1', 'Cluster 2', 'Cluster 3']  # Contoh cluster
+usage_summary = pd.DataFrame({
+    'season': ['Winter', 'Spring', 'Summer', 'Fall', 'Winter', 'Spring', 'Summer', 'Fall', 'Winter', 'Spring', 'Summer', 'Fall'],
+    'cnt': [300, 400, 800, 600, 350, 450, 850, 650, 330, 380, 780, 620],
+    'Cluster': ['Cluster 1', 'Cluster 1', 'Cluster 1', 'Cluster 1', 'Cluster 2', 'Cluster 2', 'Cluster 2', 'Cluster 2', 'Cluster 3', 'Cluster 3', 'Cluster 3', 'Cluster 3']
+})
+
+# Membuat plot dengan peningkatan visual
+fig7, ax7 = plt.subplots(figsize=(14, 8))
+scatter_plot = sns.scatterplot(
+    data=usage_summary, 
+    x='season', 
+    y='cnt', 
+    hue='Cluster', 
+    palette='coolwarm', 
+    s=200,  # Ukuran titik lebih besar
+    legend='full', 
+    ax=ax7
+)
+
+# Menambahkan anotasi pada setiap titik dengan nilai penggunaan sepeda
+for i in range(usage_summary.shape[0]):
+    ax7.text(
+        usage_summary['season'][i], 
+        usage_summary['cnt'][i] + 50,  # Sedikit di atas titik
+        usage_summary['cnt'][i], 
+        horizontalalignment='center', 
+        size='medium', 
+        color='black', 
+        weight='semibold'
+    )
+
+# Menambahkan informasi visual tambahan
+ax7.set_title('Clustering Penggunaan Sepeda Berdasarkan Musim dan Hari Kerja', fontsize=18, weight='bold')
+ax7.set_xlabel('Musim', fontsize=14, weight='bold')
+ax7.set_ylabel('Rata-rata Penggunaan Sepeda', fontsize=14, weight='bold')
+ax7.set_xticks(range(len(season_order)))
+ax7.set_xticklabels(season_order, fontsize=12)
+ax7.tick_params(axis='y', labelsize=12)
+
+# Mengatur posisi legenda di luar grafik agar tidak menghalangi
+ax7.legend(title='Cluster', title_fontsize='13', fontsize='11', bbox_to_anchor=(1.05, 1), loc='upper left')
+
+# Tampilkan plot dengan grid yang halus
+ax7.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.tight_layout()
+st.pyplot(fig7)
